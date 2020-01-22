@@ -3,9 +3,9 @@
     <div>
 
       <div  class="flex inline shadow-box flex-center" v-for="n in 1" :key="n" :class="`shadow-${11}`">
-      <div class="row col-md-6 col-xl-12" style="height: 340px;width: 730px">
-        <img src="../assets/Logo.png" alt="" srcset="" width="45%">
-        <q-card flat class="col-md-4 q-card--flat no-shadow" style="width: 401px">
+      <div class="row col-md-6 col-xl-12" style="height: 340px;width: 850px">
+        <img src="../assets/Logo.png" alt="" srcset="" width="50%">
+        <q-card flat class="col-md-4 q-card--flat no-shadow" style="width: 424px">
       <q-card-section>
         <div class="text-h4 text-blue-grey-14 q-pb-xl">
           <b>LOGIN</b>

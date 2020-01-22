@@ -19,8 +19,8 @@ daftartiket.get('/tampilkan', (req, res) => {
   .catch(error => res.json(error))
 })
 
-daftartiket.get('/tampilkan/:kotaasal/:kotatujuan', (req, res) => {
-  controller.getbyid(req.params.kotaasal, req.params.kotatujuan)
+daftartiket.get('/tampilkan/:kotaasal/:kotatujuan/:tanggalberangkat/:kelaspenumpang', (req, res) => {
+  controller.getbyid(req.params.kotaasal, req.params.kotatujuan, req.params.tanggalberangkat, req.params.kelaspenumpang)
     .then(result => res.json(result))
     .catch(error => res.json(error))
 })

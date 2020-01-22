@@ -22,9 +22,19 @@
           val => val !== null && val !== '' || 'Please type your kota asal']"
         />
         <q-input filled v-model="kotatujuan" label="Masukan kota tujuan *" lazy-rules
-        :rules="[
-          val => val !== null && val !== '' || 'Please type your kota tujuan']"
         />
+
+        <div>
+        <div class="q-pb-sm q-gutter-sm">
+          <q-badge color="teal">
+          </q-badge>
+          <q-badge color="purple" text-color="white">
+          </q-badge>
+        </div>
+
+        <q-date v-model="model2" mask="DD-MM-YYYY" />
+      </div>
+
         <q-input filled v-model="namastasiun" label="Masukan Nama Stasiun *" lazy-rules
         :rules="[
           val => val !== null && val !== '' || 'Please type your nama stasiun']"
@@ -44,6 +54,10 @@
         <q-input filled v-model="keretaapi" label="Masukan Kereta Api *" lazy-rules
         :rules="[
           val => val !== null && val !== '' || 'Please type your kereta Api']"
+        />
+        <q-input filled v-model="hargatiket" label="Masukan Harga Tiket *" lazy-rules
+        :rules="[
+          val => val !== null && val !== '' || 'Please type your Harga Tiket']"
         />
         </q-card-section>
 
@@ -66,23 +80,18 @@
       @request="onRequest"
       binary-state-sort
     >
-      <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </template>
       <template v-slot:body="props">
           <q-tr :props="props">
             <q-td key="kodebooking" :props="props">{{ props.row.kodebooking }}</q-td>
             <q-td key="kotaasal" :props="props">{{ props.row.kotaasal }}</q-td>
             <q-td key="kotatujuan" :props="props">{{ props.row.kotatujuan }}</q-td>
+            <q-td key="tanggalberangkat" :props="props">{{ props.row.tanggalberangkat }}</q-td>
             <q-td key="namastasiun" :props="props">{{ props.row.namastasiun }}</q-td>
             <q-td key="jadwalkeberangkatan" :props="props">{{ props.row.jadwalkeberangkatan }}</q-td>
             <q-td key="jadwaltiba" :props="props">{{ props.row.jadwaltiba }}</q-td>
             <q-td key="kelaspenumpang" :props="props">{{ props.row.kelaspenumpang }}</q-td>
             <q-td key="keretaapi" :props="props">{{ props.row.keretaapi }}</q-td>
+            <q-td key="hargatiket" :props="props">{{ props.row.hargatiket }}</q-td>
             <q-td key="aksi" :props="props">
               <q-card-actions align="around" class="row q-col-gutter-md no-wrap">
                 <div class="col q-gutter-md">
@@ -109,11 +118,24 @@
           <q-input label="Kode Booking" v-model="activedata.kodebooking"></q-input>
           <q-input label="Kota Asal" v-model="activedata.kotaasal"></q-input>
           <q-input label="Kota Tujuan" v-model="activedata.kotatujuan"></q-input>
+
+          <div>
+        <div class="q-pb-sm q-gutter-sm">
+          <q-badge color="teal">
+          </q-badge>
+          <q-badge color="purple" text-color="white">
+          </q-badge>
+        </div>
+
+        <q-date v-model="activedata.tanggalberangkat" mask="DD-MM-YYYY" />
+      </div>
+
           <q-input label="Nama Stasiun" v-model="activedata.namastasiun"></q-input>
           <q-input label="Jadwal Keberangkatan" v-model="activedata.jadwalkeberangkatan"></q-input>
           <q-input label="Jadwal Tiba" v-model="activedata.jadwaltiba"></q-input>
           <q-input label="Kelas Penumpang" v-model="activedata.kelaspenumpang"></q-input>
           <q-input label="Kereta Api" v-model="activedata.keretaapi"></q-input>
+          <q-input label="Harga Tiket" v-model="activedata.hargatiket"></q-input>
         </q-card-section>
 
         <q-separator />
@@ -132,6 +154,8 @@ export default {
   name: 'PageIndex',
   data () {
     return {
+      date: '2020/02/01',
+      model2: '21-01-2019',
       filter: '',
       loading: false,
       pagination: {
@@ -145,7 +169,7 @@ export default {
         {
           name: 'kodebooking',
           required: true,
-          label: 'Kode booking',
+          label: 'Kode Booking',
           align: 'left',
           field: 'kodebooking',
           format: val => `${val}`,
@@ -153,11 +177,13 @@ export default {
         },
         { name: 'kotaasal', align: 'center', label: 'Kota Asal', field: 'kotaasal', sortable: true },
         { name: 'kotatujuan', label: 'Kota Tujuan', field: 'kotatujuan', sortable: true },
+        { name: 'tanggalberangkat', label: 'Tanggal Berangkat', field: 'tanggalberangkat', sortable: true },
         { name: 'namastasiun', label: 'Nama Stasiun', field: 'namastasiun', sortable: true },
         { name: 'jadwalkeberangkatan', label: 'Jadwal Keberangkatan', field: 'jadwalkeberangkatan', sortable: true },
         { name: 'jadwaltiba', label: 'Jadwal Tiba', field: 'jadwaltiba', sortable: true },
         { name: 'kelaspenumpang', label: 'Kelas', field: 'Kelaspenumpang', sortable: true },
         { name: 'keretaapi', label: 'Kereta Api', field: 'keretaapi', sortable: true },
+        { name: 'hargatiket', label: 'Harga Tiket', field: 'hargatiket', sortable: true },
         { name: 'aksi', lebel: 'Aksi', field: 'aksi' }
       ],
       data: [],
@@ -168,11 +194,13 @@ export default {
       kodebooking: '',
       kotaasal: '',
       kotatujuan: '',
+      tanggalberangkat: '',
       namastasiun: '',
       jadwalkeberangkatan: '',
       jadwaltiba: '',
       kelaspenumpang: '',
-      keretaapi: ''
+      keretaapi: '',
+      hargatiket: ''
     }
   },
   created () {
@@ -279,6 +307,7 @@ export default {
     openDialog (data) {
       this.openedit = true
       this.activedata = data
+      this.getData()
     },
     edit () {
       this.$axios.put('/daftartiket/update/' + this.activedata._id, this.activedata)
@@ -324,11 +353,13 @@ export default {
         kodebooking: this.kodebooking,
         kotaasal: this.kotaasal,
         kotatujuan: this.kotatujuan,
+        tanggalberangkat: this.model2,
         namastasiun: this.namastasiun,
         jadwalkeberangkatan: this.jadwalkeberangkatan,
         jadwaltiba: this.jadwaltiba,
         kelaspenumpang: this.kelaspenumpang,
-        keretaapi: this.keretaapi
+        keretaapi: this.keretaapi,
+        hargatiket: this.hargatiket
       })
         .then(res => {
           if (res.data.error) {
@@ -344,11 +375,13 @@ export default {
       this.kodebooking = ''
       this.kotaasal = ''
       this.kotatujuan = ''
+      this.date = ''
       this.namastasiun = ''
       this.jadwalkeberangkatan = ''
       this.jadwaltiba = ''
       this.kelaspenumpang = ''
       this.keretaapi = ''
+      this.hargatiket = ''
     }
   }
 }

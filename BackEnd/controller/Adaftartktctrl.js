@@ -65,10 +65,10 @@ new Promise((resolve, reject) => {
   })
 })
 
-exports.getbyid = (kotaasal, kotatujuan) =>
+exports.getbyid = (kotaasal, kotatujuan, tanggalberangkat, kelaspenumpang) =>
 new Promise((resolve, reject) => {
   amodel.find({
-    kotaasal: kotaasal, kotatujuan: kotatujuan
+    kotaasal: kotaasal, kotatujuan: kotatujuan, tanggalberangkat: tanggalberangkat, kelaspenumpang: kelaspenumpang
   })
   .then(res => {
     resolve ({error:false, pesan: 'Data Berhasil diambil', data: res})

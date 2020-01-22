@@ -1,12 +1,9 @@
 const mongoose = require('mongoose')
 const schema = mongoose.Schema
 
-const AinputSchema = new schema({
+const booking = new schema({
   kodebooking: {
     type: String,
-    index: {
-      unique: true
-    }
   },
   kotaasal: {
     type: String
@@ -34,7 +31,16 @@ const AinputSchema = new schema({
   },
   hargatiket: {
     type: Number
+  },
+  nik: {
+    type: String
+  },
+  namalengkap: {
+    type: String
+  },
+  notlp: {
+    type: String
   }
 })
 
-module.exports = mongoose.model('tiketkereta', AinputSchema)
+module.exports = mongoose.model('booking', booking)

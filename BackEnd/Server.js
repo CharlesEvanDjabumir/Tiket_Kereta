@@ -20,6 +20,7 @@ express.use(bodyparser.json({extended: false}))
 express.use('/daftartiket', require('./routers/Adaftartkt'))
 express.use('/admin', require('./routers/adminrouters'))
 express.use('/user', require('./routers/userregisterR'))
+express.use('/booking', require('./routers/bookingR'))
 
 express.listen(port, () => {
   console.log(`Server Running at ${port}`)

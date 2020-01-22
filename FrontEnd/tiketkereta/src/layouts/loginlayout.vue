@@ -11,6 +11,6 @@
 <style lang="scss" scoped>
   .tengah {
     padding-top: 16%;
-    padding-left: 32%
+    padding-left: 30%
   }
 </style>

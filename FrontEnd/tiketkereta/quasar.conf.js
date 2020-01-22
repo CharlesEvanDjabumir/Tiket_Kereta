@@ -69,7 +69,11 @@ module.exports = function (ctx) {
         'QTr',
         'QTd',
         'QDialog',
-        'QSeparator'
+        'QSeparator',
+        'QDate',
+        'QCarousel',
+        'QCarouselControl',
+        'QCarouselSlide'
       ],
 
       directives: [
